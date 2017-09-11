@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+<meta charset="UTF-8" />
+<title></title>
+<script src="http://code.jquery.com/jquery-3.1.0.js"></script>
+</head>
+<style>
+
+table, tr, td{
+ 	border:1px solid black;
+    border-collapse:collapse;
+	border-spacing:2px;
+	margin:1px;
+	padding:2px;	
+}
+.swiper-container {
+	display: block;
+	position: absolute;
+	/* position: relative;
+	 */
+	top: 40px;
+	right: 0;
+	bottom: 0;
+	left: 180px;
+	box-shadow: inset 0 0 0 0 rgba(254, 203, 0, .5);
+	transition: box-shadow .1s ease;
+}
+.swiper-container2 {
+	display: block;
+	position: absolute;
+	/* position: relative;
+	 */
+	top: 40px;
+	right: 0;
+	bottom: 0;
+	left: 540px;
+	box-shadow: inset 0 0 0 0 rgba(254, 203, 0, .5);
+	transition: box-shadow .1s ease;
+}
+
+.avatar {
+	width: 50px;
+	height: 50px;
+}
+</style>
+<script type="text/javascript">
+	function save0() {
+
+		$.post("/CJ2016/Corsair/setSave0?", $("#inputForm0").serialize(),
+				function(data) {
+					if (data == "set")
+					alert("保存成功！");
+				});
+
+	}
+	function save1() {
+
+		$.post("/CJ2016/Corsair/setSave1?", $("#inputForm1").serialize(),
+				function(data) {
+					if (data == "success")
+			top.$.jBox.tip("请选择文章", "info");
+				});
+
+	}
+	function reclear() {
+
+		$.post("/CJ2016/Corsair/reset?", $("#inputForm1").serialize(),
+				function(data) {
+					if (data == "set"){
+					window.location="/CJ2016/Corsair/set";
+					alert("重置成功！");
+					}
+				});
+
+	}
+
+</script>
+<body >
+
+	<div class="swiper-container" >
+	
+	<form id="inputForm0"  method="post" action="/CJ2016/Corsair/setSave0" th:object="${prizes}" class="form-horizontal" >
+	
+		<table class="table table-bordered table-striped">
+			<tbody>
+				<tr >
+					<td th:text="${'第 1 等奖'}"></td>
+					<td><input type="text" th:field="*{prize0}"/>个</td>
+				</tr>
+				<tr >
+					<td th:text="${'第 2 等奖      '}">&nbsp;&nbsp;</td>
+					<td><input type="text"  th:field="*{prize1}"/>个</td>
+				</tr>
+				<tr >
+					<td th:text="${'第 3 等奖      '}"></td>
+					<td><input type="text"  th:field="*{prize2}"/>个</td>
+				</tr>
+				<tr >
+					<td th:text="${'第 4 等奖      '}"></td>
+					<td><input type="text"  th:field="*{prize3}"/>个</td>
+				</tr>
+				<tr >
+					<td th:text="${'第 5 等奖      '}"></td>
+					<td><input type="text"  th:field="*{prize4}"/>个</td>
+				</tr>
+			</tbody>
+		</table>
+		<input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存 " />
+</form>
+	<!-- <form id="inputForm1" action="#" th:action="@{/CJ2016/Corsair/setSave}" th:object="${prizes}"  method="post" class="form-horizontal">
+	
+		<table class="table table-bordered table-striped">
+			<tbody>
+				<tr >
+					<td th:text="${'第 '+prizes[1].id+' 等奖'}"></td>
+					<td><input type="text"  name="prizes[1].prizeClass" th:value="${prizes[1].prizeClass}"/>个</td>
+				</tr>
+			</tbody>
+		</table>
+		<input id="btnSubmit" class="btn btn-primary" type="button" value="保 存 " onclick="save1()"/> 
+</form>-->
+	</div>
+		
+		
+		
+
+	<div class="swiper-container2" >
+	
+	<form id="ss"  method="post" class="form-horizontal" >
+	
+		<table class="table table-bordered table-striped">
+			<tbody>
+				<thead>
+					<tr>
+						<td>ID</td>
+						<td>头像</td>
+						<td>昵称</td>
+						<td>国家</td>
+						<td>省/州</td>
+						<td>城市</td>
+						<td>奖项</td>
+						<td>日期</td>
+					</tr>
+				</thead>
+				<tr th:each="user : ${users}">
+					<td th:text="${user.openId}"></td>
+					<td><img class="avatar" th:src="${user.headImgUrl}" /></td>
+					<td th:text="${user.nickName}"></td>
+					<td th:text="${user.country}"></td>
+					<td th:text="${user.province}"></td>
+					<td th:text="${user.city}"></td>
+					<td th:text="${user.prizeClass}"></td>
+					<td th:text="${user.updateDate}"></td>
+				</tr>
+			</tbody>
+		</table>
+		<input id="btnSubmit" class="btn btn-primary" type="button" value="重置信息" onclick="reclear()"/>
+		</form>
+	</div>
+</body>
+</html>

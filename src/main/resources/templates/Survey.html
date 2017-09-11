@@ -1,0 +1,463 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta id="viewport" name="viewport" content="width=320,maximum-scale=1.3,user-scalable=0"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="content-language" content="zh"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=EDGE"/>
+    <title>美商海盗船-有奖活动问卷</title>
+    <!--<script src="http://code.jquery.com/jquery-3.1.0.js"></script>-->
+    <script src="../../jquery/jquery-3.1.0.js"></script>
+    <!--<script src="../../static/jquery/alert.mini.js"></script>-->
+    <script src="../../jquery/alert.js" type="text/javascript"></script>
+    <!--<link href="../../static/jquery/jquery.alerts.css" rel="stylesheet" type="text/css" media="screen"/>-->
+    <!--<script src="../../jquery/jquery-3.1.0.js"></script>-->
+    <!--<script src="../../jquery/jquery.alerts.js" type="text/javascript"></script>-->
+    <link href="../../jquery/jquery.alerts.css" rel="stylesheet" type="text/css" media="screen"/>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        /*<![CDATA[*/
+        var blk = '';
+        //微信分享数据
+        var shareData = {
+            "img_url": 'http://www.corsair.com/~/media/corsair/header/logocorsair1.svg?h=67&amp;la=en-US&amp;w=220',
+            "link": 'http://maliwei.cc/CJ2017/Survey/Go',
+            "title": '美商海盗船-有奖活动问卷',
+            "desc": ''
+        };
+        /*]]>*/
+    </script>
+</head>
+<style>
+
+    html {
+        font-size: 100px;
+        height: 100%;
+        -webkit-user-select: none;
+    }
+
+    body {
+        font-family: "microsoft Yahei";
+        font-size: 0.12rem;
+        min-height: 100%;
+        overflow-x: auto;
+        overflow-y: auto;
+        background: #f6f6f6;
+        background-position: left top;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        background-image: url(../../bg2.jpg);
+    }
+
+    .question {
+        font-weight: bold;
+    }
+
+    .clearfix:after {
+        clear: both;
+    }
+
+    p {
+        height: 20px;
+    }
+
+    table, tr, td {
+        border: 0px solid black;
+        border-collapse: collapse;
+        border-spacing: 2px;
+        margin: 1px;
+        padding: 2px;
+    }
+
+    .swiper-container {
+        display: block;
+        position: absolute;
+        /* position: relative;
+         */
+        top: 44px;
+        right: 0;
+        bottom: 0;
+        left: 10px;
+        box-shadow: inset 0 0 0 0 rgba(254, 203, 0, .5);
+        transition: box-shadow .1s ease;
+    }
+
+    .swiper-container2 {
+        display: block;
+        position: absolute;
+        /* position: relative;
+         */
+        top: 40px;
+        right: 0;
+        bottom: 0;
+        left: 540px;
+        box-shadow: inset 0 0 0 0 rgba(254, 203, 0, .5);
+        transition: box-shadow .1s ease;
+    }
+
+    .avatar {
+        width: 50px;
+        height: 50px;
+    }
+</style>
+<script type="text/javascript">
+    function validateEmail(email) {
+        var re = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+        return re.test(email);
+    }
+
+    function cc() {
+        if (!$('input:radio[name="survey1"]:checked').val()) {
+            $("#rCheck").text("题目 1 未填写");
+            $("#rCheck").css("color", "red");
+            return false;
+        }
+        if (!$('input:checkbox[name="survey2"]:checked').val()) {
+            $("#rCheck").text("题目 2 未填写");
+            $("#rCheck").css("color", "red");
+            return false;
+        }
+        if (!$('input:checkbox[name="survey3"]:checked').val()) {
+            $("#rCheck").text("题目 3 未填写");
+            $("#rCheck").css("color", "red");
+            return false;
+        }
+        if (!$('input:radio[name="survey4"]:checked').val()) {
+            $("#rCheck").text("题目 4 未填写");
+            $("#rCheck").css("color", "red");
+            return false;
+        }
+        if (!$('input:radio[name="survey5"]:checked').val()) {
+            $("#rCheck").text("题目 5 未填写");
+            $("#rCheck").css("color", "red");
+            return false;
+        }
+        if (!$('input:radio[name="survey6"]:checked').val()) {
+            $("#rCheck").text("题目 6 未填写");
+            $("#rCheck").css("color", "red");
+            return false;
+        }
+        if (!$('input:radio[name="survey7"]:checked').val()) {
+            $("#rCheck").text("题目 7 未填写");
+            $("#rCheck").css("color", "red");
+            return false;
+        }
+        if (!$('input:radio[name="survey8"]:checked').val()) {
+            $("#rCheck").text("题目 8 未填写");
+            $("#rCheck").css("color", "red");
+            return false;
+        }
+        if (!$('input:radio[name="survey9"]:checked').val()) {
+            $("#rCheck").text("题目 9 未填写");
+            $("#rCheck").css("color", "red");
+            return false;
+        }
+        if (!$('input:radio[name="survey10"]:checked').val()) {
+            $("#rCheck").text("题目 10 未填写");
+            $("#rCheck").css("color", "red");
+            return false;
+        }
+    }
+
+    function validate() {
+        $("#rCheck").text("");
+//        $("#phoneCheck").text("");
+//        $("#nameCheck").text("");
+//        $("#emailCheck").text("");
+
+        if (cc() == false)
+            return false;
+
+        var phone = $("#phone").val();
+        if (phone.trim() != '') {
+            if (/^1[34578]\d{9}$/.test(phone) == false) {
+                $("#rCheck").text(" 请检查手机号");
+                $("#rCheck").css("color", "red");
+                return false;
+            }
+        }
+        var name = $("#name").val();
+        if (name.trim() == '') {
+            $("#rCheck").text(" 请检查姓名");
+            $("#rCheck").css("color", "red");
+            return false;
+        }
+        var email = $("#email").val();
+        if (validateEmail(email)) {
+//            $("#emailCheck").text(email + " is valid :)");
+//            $("#emailCheck").css("color", "green");
+            return true;
+        } else {
+            $("#rCheck").text(" 请检查Email地址");
+            $("#rCheck").css("color", "red");
+            return false;
+        }
+    }
+
+    function save() {
+        if (validate() == false) return;
+        //$.alert('感谢您参与美商海盗船问卷调查活动，我们将在7月30日在CJ现场抽奖并于晚上9点公布获奖名单，敬请期待。');
+//        jPrompt('已经提交', '提示');
+
+        var obj = $("#inputForm0").serialize();
+        $.post("/CJ2017/Survey/saveSurveys?", obj,
+            function (data) {
+                if (data == "ok") {
+                    $("#btnSubmit").attr("disabled","disabled");
+//                    if($.confirm('感谢您参与美商海盗船问卷调查活动，我们将在7月30日在CJ现场抽奖并于晚上9点公布获奖名单，敬请期待。'))
+                    if($.alert('感谢您参与美商海盗船问卷调查活动，我们将在7月30日在CJ现场抽奖并于晚上9点公布获奖名单，敬请期待。'))
+                    window.close();
+                }
+//                if (data == "dd") {
+//                    $("#btnSubmit").attr("disabled","disabled");
+//                    if($.alert('邮箱已经参与活动'))
+//                        window.close();
+//                }
+            });
+    }
+
+</script>
+<!--<body th:style="'background-image: url(../../2560x1440px.jpg)'">-->
+<body>
+<div class="swiper-container">
+
+    <form id="inputForm0" modelAttribute="surveys" method="post" action="/CJ2017/Survey/saveSurveys" class="form-horizontal">
+
+        <table class="table table-bordered table-striped">
+            <tbody>
+            <!--11111111111111111-->
+            <tr>
+                <td class="question">1. 从何途径了解到美商海盗船？</td>
+            </tr>
+            <tr>
+                <td><input name="survey1" type="radio" class="r1" value="1"/>A、微博、微信公众号等</td>
+            </tr>
+            <tr>
+                <td><input name="survey1" type="radio" class="r1" value="2"/>B、朋友推荐</td>
+            </tr>
+            <tr>
+                <td><input name="survey1" type="radio" class="r1" value="3"/>C、网上测评
+                </td>
+            </tr>
+            <tr>
+                <td><input name="survey1" type="radio" class="r1" value="4"/>D、电脑城等实体店铺
+                </td>
+            </tr>
+            <tr>
+                <td><input name="survey1" type="radio" class="r1" value="5"/>E、杂志、报纸等刊物
+                </td>
+            </tr>
+            <tr>
+                <td><input name="survey1" type="radio" class="r1" value="6"/>F、其他
+                </td>
+            </tr>
+
+            <!--22222222222222222222222222222222222222222222222222222222222222222222222222222-->
+            <tr>
+                <td class="question">2. 拥有什么样的海盗船产品？（多选）</td>
+            </tr>
+            <tr>
+                <td><input name="survey2" type="checkbox" class="r2" value="1"/>A、外设</td>
+            </tr>
+            <tr>
+                <td><input name="survey2" type="checkbox" class="r2" value="2"/>B、机电产品
+                </td>
+            </tr>
+            <tr>
+                <td><input name="survey2" type="checkbox" class="r2" value="3"/>C、存储产品
+                </td>
+            </tr>
+            <tr>
+                <td><input name="survey2" type="checkbox" class="r2" value="4"/>D、散热器
+                </td>
+            </tr>
+            <tr>
+                <td><input name="survey2" type="checkbox" class="r2" value="5"/>E、无
+                </td>
+            </tr>
+
+            <!--333333333333333333333333333333333333333333333333333333333333333333-->
+            <tr>
+                <td class="question">3. 喜欢什么游戏？（多选）</td>
+            </tr>
+            <tr>
+                <td><input name="survey3" type="checkbox" value="1"/>A、MOBA类（如DOTA、英雄联盟等）</td>
+            </tr>
+            <tr>
+                <td><input name="survey3" type="checkbox" value="2"/>B、即时战略类（星际争霸，魔兽争霸等）</td>
+            </tr>
+            <tr>
+                <td><input name="survey3" type="checkbox" value="3"/>C、FPS类（CSGO、守望先锋等）</td>
+            </tr>
+            <tr>
+                <td><input name="survey3" type="checkbox" value="4"/>D、MMORPG类（魔兽世界，最终幻想14，天涯明月刀等）</td>
+            </tr>
+            <tr>
+                <td><input name="survey3" type="checkbox" value="5"/>E、其他类型</td>
+            </tr>
+
+            <!--444444444444444444444444444444444444444-->
+            <tr>
+                <td class="question">4. 除了美商海盗船还关注哪些外设品牌？</td>
+            </tr>
+            <tr>
+                <td><input name="survey4" type="radio" value="1"/>A、罗技</td>
+            </tr>
+            <tr>
+                <td><input name="survey4" type="radio" value="2"/>B、雷蛇</td>
+            </tr>
+            <tr>
+                <td><input name="survey4" type="radio" value="3"/>C、Cherry</td>
+            </tr>
+            <tr>
+                <td><input name="survey4" type="radio" value="4"/>D、Filco</td>
+            </tr>
+            <tr>
+                <td><input name="survey4" type="radio" value="5"/>E、其它</td>
+            </tr>
+
+            <!--5555555555555555555555555555555555555555555555555555555555555555555555-->
+            <tr>
+                <td class="question">5. 购买一把键盘最注重哪个特点？</td>
+            </tr>
+            <tr>
+                <td><input name="survey5" type="radio" value="1"/>A、品牌</td>
+            </tr>
+            <tr>
+                <td><input name="survey5" type="radio" value="2"/>B、手感</td>
+            </tr>
+            <tr>
+                <td><input name="survey5" type="radio" value="3"/>C、造型及灯光</td>
+            </tr>
+            <tr>
+                <td><input name="survey5" type="radio" value="4"/>D、性价比</td>
+            </tr>
+            <tr>
+                <td><input name="survey5" type="radio" value="5"/>E、品质保证</td>
+            </tr>
+
+            <!--6666666666666666666666666666666666666666666666666666666-->
+            <tr>
+                <td class="question">6. 平时是否关注电竞比赛？</td>
+            </tr>
+            <tr>
+                <td><input name="survey6" type="radio" value="1"/>A、非常关注</td>
+            </tr>
+            <tr>
+                <td><input name="survey6" type="radio" value="2"/>B、比较关注</td>
+            </tr>
+            <tr>
+                <td><input name="survey6" type="radio" value="3"/>C、一般</td>
+            </tr>
+            <tr>
+                <td><input name="survey6" type="radio" value="4"/>D、偶尔关注</td>
+            </tr>
+            <tr>
+                <td><input name="survey6" type="radio" value="5"/>E、基本不关注</td>
+            </tr>
+
+            <!--77777777777777777777777777777777777777777777777777777777777777777-->
+            <tr>
+                <td class="question">7. 是否会因为电竞职业选手或主播的推荐来购买外设？</td>
+            </tr>
+            <tr>
+                <td><input name="survey7" type="radio" value="1"/>A、喜欢的选手推荐的我会买一个试试</td>
+            </tr>
+            <tr>
+                <td><input name="survey7" type="radio" value="2"/>B、不一定，但是会作为重要参考</td>
+            </tr>
+            <tr>
+                <td><input name="survey7" type="radio" value="3"/>C、会因此去稍作了解，但是由自己判断是否合适</td>
+            </tr>
+            <tr>
+                <td><input name="survey7" type="radio" value="4"/>D、完全不受影响</td>
+            </tr>
+
+            <!--8888888888888888888888888888888888888888888888888888888888888888-->
+            <tr>
+                <td class="question">8. 最喜欢哪种机械键盘轴体？</td>
+            </tr>
+            <tr>
+                <td><input name="survey8" type="radio" value="1"/>A、茶轴</td>
+            </tr>
+            <tr>
+                <td><input name="survey8" type="radio" value="2"/>B、红轴</td>
+            </tr>
+            <tr>
+                <td><input name="survey8" type="radio" value="3"/>C、银轴</td>
+            </tr>
+            <tr>
+                <td><input name="survey8" type="radio" value="4"/>D、青轴</td>
+            </tr>
+            <tr>
+                <td><input name="survey8" type="radio" value="5"/>E、黑轴</td>
+            </tr>
+            <tr>
+                <td><input name="survey8" type="radio" value="6"/>F、其他</td>
+            </tr>
+
+            <!--999999999999999999999999999999999999999999999999999999-->
+            <tr>
+                <td class="question">9. 是否考虑购入更多海盗船产品？</td>
+            </tr>
+            <tr>
+                <td><input name="survey9" type="radio" value="1"/>A、是</td>
+            </tr>
+            <tr>
+                <td><input name="survey9" type="radio" value="2"/>B、否</td>
+            </tr>
+
+            <!--00000000000000000000000000000000000000000000000000000000000000000000000000-->
+            <tr>
+                <td class="question">10. 本次活动最吸引你的是？</td>
+            </tr>
+            <tr>
+                <td><input name="survey10" type="radio" value="1"/>A、搏一搏超级大奖，换台电脑畅玩游戏</td>
+            </tr>
+            <tr>
+                <td><input name="survey10" type="radio" value="2"/>B、抽个外设也不错</td>
+            </tr>
+            <tr>
+                <td><input name="survey10" type="radio" value="3"/>C、我是海盗船信仰粉丝，已经有海盗船产品，就来领一记辅销品</td>
+            </tr>
+            <tr>
+                <td><input name="survey10" type="radio" value="4"/>D、我是非洲人，专门做分母</td>
+            </tr>
+
+            <tr>
+                <td>
+                    <h3 id='rCheck'></h3>
+                    <!--<h3 id='nameCheck'></h3>-->
+                    <!--<h3 id='phoneCheck'></h3>-->
+                    <!--<h3 id='emailCheck'></h3>-->
+                </td>
+            </tr>
+            <tr>
+                <td><label class="question"><b>姓&nbsp;&nbsp;名&nbsp;:</b></label>&nbsp;&nbsp;<input id="name" name="name" type="input"
+                                                                                                   class="required"
+                                                                                                   placeholder="必填"/></td>
+            </tr>
+            <tr>
+                <td><label class="question"><b>手机号&nbsp;:</b></label>&nbsp;<input id="phone" name="phone" type="input"
+                /></td>
+            </tr>
+            <tr>
+                <td><label class="question"><b>Email&nbsp;:</b ></label>&nbsp;&nbsp;<input id="email" name="email" type="input"
+                                                                                          class="required"
+                                                                                          placeholder="必填"/>
+                    &nbsp;<input id="btnSubmit" class="btn btn-primary" type="button" value="提交" onclick="save()"/></td>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
+<div class="opensafari" id="opensafari"></div>
+</body>
+</html>

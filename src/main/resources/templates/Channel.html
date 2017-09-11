@@ -1,0 +1,799 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta id="viewport" name="viewport" content="width=320,maximum-scale=1.3,user-scalable=0"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="content-language" content="zh"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=EDGE"/>
+    <title>美商海盗船-有奖活动问卷</title>
+    <!--<script src="http://code.jquery.com/jquery-3.1.0.js"></script>-->
+    <script src="../../jquery/jquery-3.1.0.js"></script>
+    <!--<script src="../../static/jquery/alert.mini.js"></script>-->
+    <script src="../../jquery/alert.js" type="text/javascript"></script>
+    <!--<link href="../../static/jquery/jquery.alerts.css" rel="stylesheet" type="text/css" media="screen"/>-->
+    <!--<script src="../../jquery/jquery-3.1.0.js"></script>-->
+    <!--<script src="../../jquery/jquery.alerts.js" type="text/javascript"></script>-->
+    <link href="../../jquery/jquery.alerts.css" rel="stylesheet" type="text/css" media="screen"/>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        /*<![CDATA[*/
+        var blk = '';
+        //微信分享数据
+        var shareData = {
+            "img_url": 'http://www.corsair.com/~/media/corsair/header/logocorsair1.svg?h=67&amp;la=en-US&amp;w=220',
+            "link": 'http://maliwei.cc/CJ2017/Survey/Go',
+            "title": '美商海盗船-有奖活动问卷',
+            "desc": ''
+        };
+        /*]]>*/
+    </script>
+</head>
+<style>
+
+    html {
+        font-size: 100px;
+        height: 100%;
+        -webkit-user-select: none;
+    }
+
+    body {
+        font-family: "microsoft Yahei";
+        font-size: 0.12rem;
+        min-height: 100%;
+        overflow-x: auto;
+        overflow-y: auto;
+        background: #f6f6f6;
+        background-position: left top;
+        /*background-attachment: fixed;*/
+        background-repeat: no-repeat;
+        background-image: url(../../bg2.jpg);
+    }
+
+    .question {
+        font-weight: bold;
+    }
+
+    .clearfix:after {
+        clear: both;
+    }
+
+    p {
+        height: 20px;
+    }
+
+    table, tr, td {
+        border: 0px solid black;
+        border-collapse: collapse;
+        border-spacing: 2px;
+        margin: 1px;
+        padding: 2px;
+    }
+
+    .swiper-container {
+        display: block;
+        position: absolute;
+        /* position: relative;
+         */
+        top: 44px;
+        right: 0;
+        bottom: 0;
+        left: 10px;
+        box-shadow: inset 0 0 0 0 rgba(254, 203, 0, .5);
+        transition: box-shadow .1s ease;
+    }
+
+    .swiper-container2 {
+        display: block;
+        position: absolute;
+        /* position: relative;
+         */
+        top: 40px;
+        right: 0;
+        bottom: 0;
+        left: 540px;
+        box-shadow: inset 0 0 0 0 rgba(254, 203, 0, .5);
+        transition: box-shadow .1s ease;
+    }
+
+    .avatar {
+        width: 50px;
+        height: 50px;
+    }
+    .tip {
+        color: red;
+    }
+
+</style>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    function validateEmail(email) {
+        var re = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+        return re.test(email);
+    }
+
+    function cc() {
+        if (!$('input:checkbox[name="survey1"]:checked').val()) {
+            $("#rCheck").text("题目 1 未填写");
+            $("#rCheck").css("color", "red");
+            return false;
+        }
+        if (!$('input:radio[name="survey2"]:checked').val()) {
+            $("#rCheck").text("题目 2 未填写");
+            $("#rCheck").css("color", "red");
+            return false;
+        }
+        if (!$('input:radio[name="survey3"]:checked').val()) {
+            $("#rCheck").text("题目 3 未填写");
+            $("#rCheck").css("color", "red");
+            return false;
+        }
+        if ($('input:radio[name="survey3"]:checked').val()==1 && !$('input:radio[name="survey4"]:checked').val()) {
+            $("#rCheck").text("题目 4 未填写");
+            $("#rCheck").css("color", "red");
+            return false;
+        }
+        if ($('input:radio[name="survey3"]:checked').val()==2 && !$('input:radio[name="survey5"]:checked').val()) {
+            $("#rCheck").text("题目 5 未填写");
+            $("#rCheck").css("color", "red");
+            return false;
+        }
+        if (!$('input:radio[name="survey6"]:checked').val()) {
+            $("#rCheck").text("题目 6 未填写");
+            $("#rCheck").css("color", "red");
+            return false;
+        }
+        if (!$('input:radio[name="survey7"]:checked').val()) {
+            $("#rCheck").text("题目 7 未填写");
+            $("#rCheck").css("color", "red");
+            return false;
+        }
+        if (!$('input:radio[name="survey8"]:checked').val()) {
+            $("#rCheck").text("题目 8 未填写");
+            $("#rCheck").css("color", "red");
+            return false;
+        }
+        if (!$('input:radio[name="survey9"]:checked').val()) {
+            $("#rCheck").text("题目 9 未填写");
+            $("#rCheck").css("color", "red");
+            return false;
+        }
+        if (!$('input:radio[name="survey10"]:checked').val()) {
+            $("#rCheck").text("题目 10 未填写");
+            $("#rCheck").css("color", "red");
+            return false;
+        }
+        if (!$('input:radio[name="survey11"]:checked').val()) {
+            $("#rCheck").text("题目 10 未填写");
+            $("#rCheck").css("color", "red");
+            return false;
+        }
+        if (!$('input:radio[name="survey10"]:checked').val()) {
+            $("#rCheck").text("题目 11 未填写");
+            $("#rCheck").css("color", "red");
+            return false;
+        }
+        if (!$('input:radio[name="survey10"]:checked').val()) {
+            $("#rCheck").text("题目 10 未填写");
+            $("#rCheck").css("color", "red");
+            return false;
+        }
+        if (!$('input:radio[name="survey12"]:checked').val()) {
+            $("#rCheck").text("题目 12 未填写");
+            $("#rCheck").css("color", "red");
+            return false;
+        }
+        if (!$('input:radio[name="survey10"]:checked').val()) {
+            $("#rCheck").text("题目 10 未填写");
+            $("#rCheck").css("color", "red");
+            return false;
+        }
+        if (!$('input:radio[name="survey13"]:checked').val()) {
+            $("#rCheck").text("题目 13 未填写");
+            $("#rCheck").css("color", "red");
+            return false;
+        }
+        if (!$('input:radio[name="survey10"]:checked').val()) {
+            $("#rCheck").text("题目 10 未填写");
+            $("#rCheck").css("color", "red");
+            return false;
+        }
+        if (!$('input:radio[name="survey14"]:checked').val()) {
+            $("#rCheck").text("题目 14 未填写");
+            $("#rCheck").css("color", "red");
+            return false;
+        }
+        if (!$('input:radio[name="survey15"]:checked').val()) {
+            $("#rCheck").text("题目 15 未填写");
+            $("#rCheck").css("color", "red");
+            return false;
+        }
+        if (!$('input:radio[name="survey16"]:checked').val()) {
+            $("#rCheck").text("题目 16 未填写");
+            $("#rCheck").css("color", "red");
+            return false;
+        }
+        if (!$('input:radio[name="survey17"]:checked').val()) {
+            $("#rCheck").text("题目 17 未填写");
+            $("#rCheck").css("color", "red");
+            return false;
+        }
+        if (!$('input:radio[name="survey18"]:checked').val()) {
+            $("#rCheck").text("题目 18 未填写");
+            $("#rCheck").css("color", "red");
+            return false;
+        }
+        if (!$('input:radio[name="survey19"]:checked').val()) {
+            $("#rCheck").text("题目 19 未填写");
+            $("#rCheck").css("color", "red");
+            return false;
+        }
+        if (!$('input:radio[name="survey20"]:checked').val()) {
+            $("#rCheck").text("题目 20 未填写");
+            $("#rCheck").css("color", "red");
+            return false;
+        }
+    }
+
+    function validate() {
+        $("#rCheck").text("");
+//        $("#phoneCheck").text("");
+//        $("#nameCheck").text("");
+//        $("#emailCheck").text("");
+
+        if (cc() == false)
+            return false;
+
+        var phone = $("#phone").val();
+        if (phone.trim() != '') {
+            if (/^1[34578]\d{9}$/.test(phone) == false) {
+                $("#rCheck").text(" 请检查手机号");
+                $("#rCheck").css("color", "red");
+                return false;
+            }
+        }
+        var name = $("#name").val();
+        if (name.trim() == '') {
+            $("#rCheck").text(" 请检查姓名");
+            $("#rCheck").css("color", "red");
+            return false;
+        }
+        var email = $("#email").val();
+        if (validateEmail(email)) {
+//            $("#emailCheck").text(email + " is valid :)");
+//            $("#emailCheck").css("color", "green");
+            return true;
+        } else {
+            $("#rCheck").text(" 请检查Email地址");
+            $("#rCheck").css("color", "red");
+            return false;
+        }
+    }
+
+    function save() {
+        if (validate() == false) return;
+
+        var obj = $("#inputForm0").serialize();
+        $.post("/C2017/cs/saveSurveys?", obj,
+            function (data) {
+                if (data.result == "ok") {
+                    $("#btnSubmit").attr("disabled", "disabled");
+                    if ($.alert('感谢您参与美商海盗船问卷调查活动，请牢记抽奖码：'+data.code+'。'))
+                        window.close();
+                }else{
+                    $("#btnSubmit").attr("disabled", "disabled");
+                    if ($.alert('请勿重复提交，您的抽奖码是：'+data.code+'。'))
+                        window.close();
+                }
+            });
+    }
+    /*]]>*/
+</script>
+<!--<body th:style="'background-image: url(../../2560x1440px.jpg)'">-->
+<body>
+<div class="swiper-container">
+
+    <form id="inputForm0" modelAttribute="channel" method="post" action="/C2017/cs/saveSurveys" class="form-horizontal">
+        <input name="channelName" type="hidden" th:value="${channel.channelName}"/>
+        <table class="table table-bordered table-striped">
+            <tbody>
+            <!--11111111111111111-->
+            <tr>
+                <td class="question">1. 您平时都有玩哪些类型的游戏（多选）？</td>
+            </tr>
+            <tr>
+                <td><input name="survey1" type="checkbox" class="r1" value="1"/>A、MOBA类</td>
+            </tr>
+            <tr>
+                <td><input name="survey1" type="checkbox" class="r1" value="2"/>B、RTS即时策略类</td>
+            </tr>
+            <tr>
+                <td><input name="survey1" type="checkbox" class="r1" value="3"/>C、FPS第一人称视角类</td>
+            </tr>
+            <tr>
+                <td><input name="survey1" type="checkbox" class="r1" value="4"/>D、格斗类
+                </td>
+            </tr>
+            <tr>
+                <td><input name="survey1" type="checkbox" class="r1" value="5"/>E、MMORPG类
+                </td>
+            </tr>
+            <tr>
+                <td><input name="survey1" type="checkbox" class="r1" value="6"/>F、其它
+                </td>
+            </tr>
+
+            <!--22222222222222222222222222222222222222222222222222222222222222222222222222222-->
+            <tr>
+                <td class="question">2. 您目前使用的键盘品牌是？</td>
+            </tr>
+            <tr>
+                <td><input name="survey2" type="radio" class="r2" value="1"/>A、美商海盗船</td>
+            </tr>
+            <tr>
+                <td><input name="survey2" type="radio" class="r2" value="2"/>B、Filco
+                </td>
+            </tr>
+            <tr>
+                <td><input name="survey2" type="radio" class="r2" value="3"/>C、Cherry
+                </td>
+            </tr>
+            <tr>
+                <td><input name="survey2" type="radio" class="r2" value="4"/>D、达尔优
+                </td>
+            </tr>
+            <tr>
+                <td><input name="survey2" type="radio" class="r2" value="5"/>E、罗技
+                </td>
+            </tr>
+            <tr>
+                <td><input name="survey2" type="radio" class="r2" value="6"/>F、雷蛇
+                </td>
+            </tr>
+            <tr>
+                <td><input name="survey2" type="radio" class="r2" value="7"/>G、赛睿
+                </td>
+            </tr>
+            <tr>
+                <td><input name="survey2" type="radio" class="r2" value="8"/>H、双飞燕
+                </td>
+            </tr>
+            <tr>
+                <td><input name="survey2" type="radio" class="r2" value="9"/>I、凯酷
+                </td>
+            </tr>
+            <tr>
+                <td><input name="survey2" type="radio" class="r2" value="10"/>J、Ducky
+                </td>
+            </tr>
+            <tr>
+                <td><input name="survey2" type="radio" class="r2" value="11"/>K、其它
+                </td>
+            </tr>
+
+            <!--333333333333333333333333333333333333333333333333333333333333333333-->
+            <tr>
+                <td class="question">3. 您更喜欢使用薄膜键盘还是机械键盘？</td>
+            </tr>
+            <tr>
+                <td><input name="survey3" type="radio" value="1"/>A、薄膜键盘（回答第4题）</td>
+            </tr>
+            <tr>
+                <td><input name="survey3" type="radio" value="2"/>B、机械键盘（回答第5题）</td>
+            </tr>
+
+            <!--444444444444444444444444444444444444444-->
+            <tr>
+                <td class="question">4. 您为什么更喜欢用薄膜键盘？</td>
+            </tr>
+            <tr>
+                <td><input name="survey4" type="radio" value="1"/>A、按键更轻柔</td>
+            </tr>
+            <tr>
+                <td><input name="survey4" type="radio" value="2"/>B、安静的手感</td>
+            </tr>
+            <tr>
+                <td><input name="survey4" type="radio" value="3"/>C、快速的按键回弹</td>
+            </tr>
+            <tr>
+                <td><input name="survey4" type="radio" value="4"/>D、价格更便宜</td>
+            </tr>
+            <tr>
+                <td><input name="survey4" type="radio" value="5"/>E、其它</td>
+            </tr>
+
+            <!--5555555555555555555555555555555555555555555555555555555555555555555555-->
+            <tr>
+                <td class="question">5. 您为什么更喜欢机械键盘？</td>
+            </tr>
+            <tr>
+                <td><input name="survey5" type="radio" value="1"/>A、更持久的使用寿命和恒久不变的手感</td>
+            </tr>
+            <tr>
+                <td><input name="survey5" type="radio" value="2"/>B、精确的按键</td>
+            </tr>
+            <tr>
+                <td><input name="survey5" type="radio" value="3"/>C、背光灯</td>
+            </tr>
+            <tr>
+                <td><input name="survey5" type="radio" value="4"/>D、我喜欢更大的按键声音</td>
+            </tr>
+            <tr>
+                <td><input name="survey5" type="radio" value="5"/>E、其它</td>
+            </tr>
+
+            <!--6666666666666666666666666666666666666666666666666666666-->
+            <tr>
+                <td class="question">6. 近期是否有买一个新键盘的计划？</td>
+            </tr>
+            <tr>
+                <td><input name="survey6" type="radio" value="1"/>A、当然要买</td>
+            </tr>
+            <tr>
+                <td><input name="survey6" type="radio" value="2"/>B、如果见到合适的会买</td>
+            </tr>
+            <tr>
+                <td><input name="survey6" type="radio" value="3"/>C、如果有促销或折扣会买</td>
+            </tr>
+            <tr>
+                <td><input name="survey6" type="radio" value="4"/>D、不会购买</td>
+            </tr>
+
+            <!--77777777777777777777777777777777777777777777777777777777777777777-->
+            <tr>
+                <td class="question">7. 您愿意花费多少钱购买键盘？</td>
+            </tr>
+            <tr>
+                <td><input name="survey7" type="radio" value="1"/>A、低于400元</td>
+            </tr>
+            <tr>
+                <td><input name="survey7" type="radio" value="2"/>B、401~600元</td>
+            </tr>
+            <tr>
+                <td><input name="survey7" type="radio" value="3"/>C、601~1000元</td>
+            </tr>
+            <tr>
+                <td><input name="survey7" type="radio" value="4"/>D、1001~1500元</td>
+            </tr>
+            <tr>
+                <td><input name="survey7" type="radio" value="5"/>E、1501~2000元</td>
+            </tr>
+            <tr>
+                <td><input name="survey7" type="radio" value="6"/>F、我不在乎价钱</td>
+            </tr>
+
+            <!--8888888888888888888888888888888888888888888888888888888888888888-->
+            <tr>
+                <td class="question">8. 您喜欢那种轴体？</td>
+            </tr>
+            <tr>
+                <td><input name="survey8" type="radio" value="1"/>A、cherry红轴</td>
+            </tr>
+            <tr>
+                <td><input name="survey8" type="radio" value="2"/>B、cherry茶轴</td>
+            </tr>
+            <tr>
+                <td><input name="survey8" type="radio" value="3"/>C、cherry黑轴</td>
+            </tr>
+            <tr>
+                <td><input name="survey8" type="radio" value="4"/>D、cherry青轴</td>
+            </tr>
+            <tr>
+                <td><input name="survey8" type="radio" value="5"/>E、cherry银轴</td>
+            </tr>
+            <tr>
+                <td><input name="survey8" type="radio" value="5"/>F、其它</td>
+            </tr>
+
+            <!--999999999999999999999999999999999999999999999999999999-->
+            <tr>
+                <td class="question">9. 如果您要买一个新键盘，您会选择下列哪个品牌？</td>
+            </tr>
+            <tr>
+                <td><input name="survey9" type="radio" value="1"/>A、美商海盗船</td>
+            </tr>
+            <tr>
+                <td><input name="survey9" type="radio" value="2"/>B、Filco</td>
+            </tr>
+            <tr>
+                <td><input name="survey9" type="radio" value="3"/>C、cherry</td>
+            </tr>
+            <tr>
+                <td><input name="survey9" type="radio" value="4"/>D、达尔优</td>
+            </tr>
+            <tr>
+                <td><input name="survey9" type="radio" value="5"/>E、罗技</td>
+            </tr>
+            <tr>
+                <td><input name="survey9" type="radio" value="6"/>F、雷蛇</td>
+            </tr>
+            <tr>
+                <td><input name="survey9" type="radio" value="7"/>G、赛睿</td>
+            </tr>
+            <tr>
+                <td><input name="survey9" type="radio" value="8"/>H、其它</td>
+            </tr>
+
+            <!--00000000000000000000000000000000000000000000000000000000000000000000000000-->
+            <tr>
+                <td class="question">10. 您最喜欢机械键盘的什么特点？</td>
+            </tr>
+            <tr>
+                <td><input name="survey10" type="radio" value="1"/>A、持久耐用和高品质</td>
+            </tr>
+            <tr>
+                <td><input name="survey10" type="radio" value="2"/>B、优秀的轴体</td>
+            </tr>
+            <tr>
+                <td><input name="survey10" type="radio" value="3"/>C、炫酷的灯光效果</td>
+            </tr>
+            <tr>
+                <td><input name="survey10" type="radio" value="4"/>D、能自己进行DIY设计和更换键帽</td>
+            </tr>
+            <tr>
+                <td><input name="survey10" type="radio" value="5"/>E、防水防尘的设计</td>
+            </tr>
+            <tr>
+                <td><input name="survey10" type="radio" value="6"/>F、多媒体控制</td>
+            </tr>
+            <tr>
+                <td><input name="survey10" type="radio" value="7"/>G、其它</td>
+            </tr>
+
+            <!--11-->
+            <tr>
+                <td class="question">11、您最喜欢怎样的键帽？</td>
+            </tr>
+            <tr>
+                <td><input name="survey11" type="radio" value="1"/>A、看起来很酷的</td>
+            </tr>
+            <tr>
+                <td><input name="survey11" type="radio" value="2"/>B、触感好的</td>
+            </tr>
+            <tr>
+                <td><input name="survey11" type="radio" value="3"/>C、耐用的</td>
+            </tr>
+            <tr>
+                <td><input name="survey11" type="radio" value="4"/>D、能实时反馈的</td>
+            </tr>
+            <tr>
+                <td><input name="survey11" type="radio" value="5"/>E、其它</td>
+            </tr>
+
+            <!--12-->
+            <tr>
+                <td class="question">12、请问您是否了解美商海盗船的键盘产品？</td>
+            </tr>
+            <tr>
+                <td><input name="survey12" type="radio" value="1"/>A、我很了解美商海盗船的键盘产品</td>
+            </tr>
+            <tr>
+                <td><input name="survey12" type="radio" value="2"/>B、我对美商海盗船的键盘产品有所了解</td>
+            </tr>
+            <tr>
+                <td><input name="survey12" type="radio" value="3"/>C、听说过但是并不十分了解</td>
+            </tr>
+            <tr>
+                <td><input name="survey12" type="radio" value="4"/>D、完全不知道</td>
+            </tr>
+
+            <!--00000000000000000000000000000000000000000000000000000000000000000000000000-->
+            <tr>
+                <td class="question">13、您是通过什么渠道了解到美商海盗船以及它的产品的信息的？</td>
+            </tr>
+            <tr>
+                <td><input name="survey13" type="radio" value="1"/>A、杂志报刊</td>
+            </tr>
+            <tr>
+                <td><input name="survey13" type="radio" value="2"/>B、美商海盗船的社交媒体</td>
+            </tr>
+            <tr>
+                <td><input name="survey13" type="radio" value="3"/>C、朋友推荐的</td>
+            </tr>
+            <tr>
+                <td><input name="survey13" type="radio" value="4"/>D、零售商的网站</td>
+            </tr>
+            <tr>
+                <td><input name="survey13" type="radio" value="5"/>E、美商海盗船的官网</td>
+            </tr>
+            <tr>
+                <td><input name="survey13" type="radio" value="6"/>F、其它</td>
+            </tr>
+
+            <!--00000000000000000000000000000000000000000000000000000000000000000000000000-->
+            <tr>
+                <td class="question">14、您认为美商海盗船的机械键盘的优点是什么？</td>
+            </tr>
+            <tr>
+                <td><input name="survey14" type="radio" value="1"/>A、高品质</td>
+            </tr>
+            <tr>
+                <td><input name="survey14" type="radio" value="2"/>B、采用cherry轴体</td>
+            </tr>
+            <tr>
+                <td><input name="survey14" type="radio" value="3"/>C、RGB灯光效果</td>
+            </tr>
+            <tr>
+                <td><input name="survey14" type="radio" value="4"/>D、人体工程学设计</td>
+            </tr>
+            <tr>
+                <td><input name="survey14" type="radio" value="5"/>E、合适的价格和高性价比</td>
+            </tr>
+            <tr>
+                <td><input name="survey14" type="radio" value="6"/>F、持久耐用</td>
+            </tr>
+            <tr>
+                <td><input name="survey14" type="radio" value="7"/>G、其它</td>
+            </tr>
+
+            <!--00000000000000000000000000000000000000000000000000000000000000000000000000-->
+            <tr>
+                <td class="question">15、您认为美商海盗船的键盘还有什么需要改进的地方？</td>
+            </tr>
+            <tr>
+                <td><input name="survey15" type="radio" value="1"/>A、增强产品的个性化</td>
+            </tr>
+            <tr>
+                <td><input name="survey15" type="radio" value="2"/>B、键盘驱动太难运行</td>
+            </tr>
+            <tr>
+                <td><input name="survey15" type="radio" value="3"/>C、增加DIY的便捷性</td>
+            </tr>
+            <tr>
+                <td><input name="survey15" type="radio" value="4"/>D、太多相似的键盘，没有差异化</td>
+            </tr>
+            <tr>
+                <td><input name="survey15" type="radio" value="5"/>E、价格太贵了</td>
+            </tr>
+            <tr>
+                <td><input name="survey15" type="radio" value="6"/>F、其它</td>
+            </tr>
+
+            <!--00000000000000000000000000000000000000000000000000000000000000000000000000-->
+            <tr>
+                <td class="question">16、您是否有考虑购买一把美商海盗船的机械键盘？</td>
+            </tr>
+            <tr>
+                <td><input name="survey16" type="radio" value="1"/>A、当然，这是信仰</td>
+            </tr>
+            <tr>
+                <td><input name="survey16" type="radio" value="2"/>B、如果看到有什么特别的我会购买</td>
+            </tr>
+            <tr>
+                <td><input name="survey16" type="radio" value="3"/>C、如果有促销和打折我会购买</td>
+            </tr>
+            <tr>
+                <td><input name="survey16" type="radio" value="4"/>D、不，虽然我喜欢但是太贵了</td>
+            </tr>
+            <tr>
+                <td><input name="survey16" type="radio" value="5"/>E、不，我完全不会考虑购买</td>
+            </tr>
+
+            <!--00000000000000000000000000000000000000000000000000000000000000000000000000-->
+            <tr>
+                <td class="question">17、您最喜欢美商海盗船的哪款机械键盘？</td>
+            </tr>
+            <tr>
+                <td><input name="survey17" type="radio" value="1"/>A、K95 RGB PLATINUM
+                </td>
+            </tr>
+            <tr>
+                <td><input name="survey17" type="radio" value="2"/>B、K70 RGB
+                </td>
+            </tr>
+            <tr>
+                <td><input name="survey17" type="radio" value="3"/>C、STRAFE RGB
+                </td>
+            </tr>
+            <tr>
+                <td><input name="survey17" type="radio" value="4"/>D、K65 RGB
+                </td>
+            </tr>
+            <tr>
+                <td><input name="survey17" type="radio" value="5"/>E、K68</td>
+            </tr>
+            <tr>
+                <td><input name="survey17" type="radio" value="6"/>F、K63</td>
+            </tr>
+            <tr>
+                <td><input name="survey17" type="radio" value="7"/>G、K66</td>
+            </tr>
+            <tr>
+                <td><input name="survey17" type="radio" value="8"/>H、我不清楚美商海盗船的键盘</td>
+            </tr>
+
+            <!--00000000000000000000000000000000000000000000000000000000000000000000000000-->
+            <tr>
+                <td class="question">18、您的年龄是？</td>
+            </tr>
+            <tr>
+                <td><input name="survey18" type="radio" value="1"/>A、12岁以下</td>
+            </tr>
+            <tr>
+                <td><input name="survey18" type="radio" value="2"/>B、13~18岁
+                </td>
+            </tr>
+            <tr>
+                <td><input name="survey18" type="radio" value="3"/>C、19~24岁
+                </td>
+            </tr>
+            <tr>
+                <td><input name="survey18" type="radio" value="4"/>D、25~30岁
+                </td>
+            </tr>
+            <tr>
+                <td><input name="survey18" type="radio" value="5"/>E、31~40岁
+                </td>
+            </tr>
+            <tr>
+                <td><input name="survey18" type="radio" value="6"/>F、40以上</td>
+            </tr>
+
+            <!--19-->
+            <tr>
+                <td class="question">19、您的性别是？</td>
+            </tr>
+            <tr>
+                <td><input name="survey19" type="radio" value="1"/>A、男性</td>
+            </tr>
+            <tr>
+                <td><input name="survey19" type="radio" value="2"/>B、女性</td>
+            </tr>
+
+            <!--20-->
+            <tr>
+                <td class="question">20、您的职业是？</td>
+            </tr>
+            <tr>
+                <td><input name="survey20" type="radio" value="1"/>A、学生</td>
+            </tr>
+            <tr>
+                <td><input name="survey20" type="radio" value="2"/>B、一般企业工作人员</td>
+            </tr>
+            <tr>
+                <td><input name="survey20" type="radio" value="3"/>C、公务员或国企、事业单位员工</td>
+            </tr>
+            <tr>
+                <td><input name="survey20" type="radio" value="4"/>D、自由工作者/个体户
+                </td>
+            </tr>
+            <tr>
+                <td><input name="survey20" type="radio" value="5"/>E、其它</td>
+            </tr>
+
+            <tr>
+                <td>
+                    <h3 id='rCheck'></h3>
+                    <!--<h3 id='nameCheck'></h3>-->
+                    <!--<h3 id='phoneCheck'></h3>-->
+                    <!--<h3 id='emailCheck'></h3>-->
+                </td>
+            </tr>
+            <tr>
+                <td><label class="question"><b>姓&nbsp;&nbsp;名&nbsp;:</b></label>&nbsp;&nbsp;<input id="name" name="name" type="input"
+                                                                                                   class="required"
+                                                                                                   placeholder="必填"/></td>
+            </tr>
+            <tr>
+                <td><label class="question"><b>手机号&nbsp;:</b></label>&nbsp;<input id="phone" name="phone" type="input"
+                /></td>
+            </tr>
+            <tr>
+                <td><label class="question"><b>Email&nbsp;:</b></label>&nbsp;&nbsp;<input id="email" name="email" type="input"
+                                                                                          class="required"
+                                                                                          placeholder="必填"/>
+                    &nbsp;<input id="btnSubmit" class="btn btn-primary" type="button" value="提交" onclick="save()"/></td>
+            </tr>
+            <tr>
+                <td class="">提示：每个邮箱只能参加一次活动</td>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
+<div class="opensafari" id="opensafari"></div>
+</body>
+</html>
