@@ -15,6 +15,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "channel_class")
 @Data
+//@NamedQuery(name = "Task.findByTaskName", query = "select t from ChannelClass t where t.taskName = ?1")
 public class ChannelClass implements Serializable {
 	/**
 	 * 
