@@ -386,14 +386,20 @@ this.init();//
 				answer.put(19+ans, sco == 0 ? 1 : sco + 1);
 
 				//44444
-				ans = ch.getSurvey4();
-				sco = answer.get(22+ans);
-				answer.put(22+ans, sco == 0 ? 1 : sco + 1);
+				try{
+					ans = ch.getSurvey4();
+					sco = answer.get(22+ans);
+					answer.put(22+ans, sco == 0 ? 1 : sco + 1);
+				}catch (Exception e){
+				}
 
 				//5555555
-				ans = ch.getSurvey5();
-				sco = answer.get(28+ans);
-				answer.put(28+ans, sco == 0 ? 1 : sco + 1);
+				try{
+					ans = ch.getSurvey5();
+					sco = answer.get(28+ans);
+					answer.put(28+ans, sco == 0 ? 1 : sco + 1);
+				}catch (Exception e){
+				}
 
 				//66666
 				ans = ch.getSurvey6();
