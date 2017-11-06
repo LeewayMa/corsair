@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,6 +35,7 @@ public class ChannelController {
 	private static List<String> questions = new ArrayList();
 	private static HashMap<Integer, Integer> answer = new HashMap<Integer, Integer>();
 	private static int[] kkk = {0, 7, 19, 22, 28, 34, 39, 46, 53, 62, 70, 76, 81, 88, 96, 103, 109, 118, 125, 128};
+
 	static {
 		questions.add("1、您平时都有玩哪些类型的游戏？（多选）");
 		questions.add("A、MOBA类");
@@ -171,60 +173,50 @@ public class ChannelController {
 		questions.add("E、其他");
 
 	}
-	private static void init(){
+
+//	static {
+//		this.getMaxCode();
+//	}
+
+	HttpServletRequest final_request;
+	HttpServletResponse final_response;
+	@Autowired
+	private RedisUtil redisUtil;
+	@Autowired
+	private ChannelClassDao channelClassDao;
+
+	//调查答卷导出之前，初始化
+	private static void init() {
 		answer.clear();
 		for (int j = 0; j < 134; j++) {
 			boolean flag = false;
 			for (int k : kkk) {
-				if(j == k) flag = true;
+				if (j == k) flag = true;
 			}
-			if(!flag) {
+			if (!flag) {
 				answer.put(j, 0);
-			}else
+			} else
 				answer.put(j, null);
 		}
 	}
 
-	//		JsonMapper jm = JsonMapper.getInstance();
-//	String key = "surveys_count";
-	HttpServletRequest final_request;
-	HttpServletResponse final_response;
-	//	private static String channel_code = ":code:";
-	@Autowired
-	private RedisUtil redisUtil;
-	//	private static final String path = "/CJ2017/Survey";
-//	@Autowired
-//	private WeixinUserInfoDao infoDao;
-//	@Autowired
-//	private WeixinUserListDao listDao;
-	@Autowired
-	private ChannelClassDao channelClassDao;
-
 	private void getMaxCode() {
-//		List<ChannelClass> channelClass = channelClassDao.findListGroupByChannelName();
-//		String[] names =
-//		int maxCode = 1;
-//		for (String name : channelClass) {
-//		for (ChannelClass name : channelClass) {
-//			maxCode = channelClassDao.findCodeByChannelNameOrderByIdDesc(name.getChannelName());
-//			redisUtil.set(name.getChannelName(), maxCode);
-//			maxCode = channelClassDao.findCodeByChannelNameOrderByIdDesc(name);
-//			redisUtil.set(name, maxCode);
-//		}
-//Maps map = Maps.newHashMap();
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
 
 		List<ChannelClass> list = Lists.newArrayList(channelClassDao.findAll());
-//			List<ChannelClass> list = Lists.newArrayList(channelClassDao.findAllByChannelName(key));
-//		List<ChannelClass> listsssss = Lists.newArrayList();
 		for (ChannelClass ch : list) {
 //			int maxCode = 1;
-			if (map.get(ch.getChannelName()) == null)
+			if (map.get(ch.getChannelName()) == null) {
+
 				map.put(ch.getChannelName(), 1);
-			else {
+				ch.setCode(1);
+			} else {
 				map.put(ch.getChannelName(), map.get(ch.getChannelName()) + 1);
+				ch.setCode(map.get(ch.getChannelName()));
 			}
 		}
+		channelClassDao.save(list);
+
 		Set<String> keys = map.keySet();
 		for (String ch : keys) {
 			redisUtil.set(ch, map.get(ch) + 1);
@@ -242,12 +234,13 @@ public class ChannelController {
 
 	@RequestMapping(value = "/saveSurveys")
 	@ResponseBody
+	@Transactional
 	public HashMap saveSurveys(ModelMap map, @ModelAttribute(value = "prizes") Channel surveys) {
-		getMaxCode();
+		//每次保存前，同步maxcode值
+		this.getMaxCode();
 
 		log.info(" --#### 提交问卷 -- " + surveys);
 		List<ChannelClass> channels = channelClassDao.findByChannelNameAndEmail(surveys.getChannelName(), surveys.getEmail());
-//		Object channels = channelClassDao.findByChannelNameAndEmail(surveys.getChannelName(),surveys.getEmail());
 		HashMap data = Maps.newHashMap();
 
 		if (channels != null && channels.size() > 0) {
@@ -263,26 +256,6 @@ public class ChannelController {
 		} catch (Exception e) {
 			log.error("######################  导出" + surveys.getChannelName() + "-" + e);
 		}
-//		if (codeMap.get(surveys.getChannelName()) != null) {
-//			maxCode = codeMap.get(surveys.getChannelName());
-//		}
-//		if (codeMap.get(surveys.getChannelName()) == null) {
-//			int maxCode = channelClassDao.findMaxCodeByChannelName(surveys.getChannelName());
-//			maxCode = channelClassDao.findByChannelName(surveys.getChannelName());
-//			Iterator<ChannelClass> iss = channelClassDao.findAllByChannelName(surveys.getChannelName());
-
-//			List<ChannelClass> list = Lists.newArrayList(channelClassDao.findAllByChannelName(surveys.getChannelName()));
-//			if (list.size() > 0) maxCode = list.get(list.size() - 1).getCode();
-//			if (maxCode == -1) {
-//				codeMap.put(surveys.getChannelName(), 1);
-//			} else {
-//				codeMap.put(surveys.getChannelName(), maxCode + 1);
-//			}
-//			codeMap.put(surveys.getChannelName(), maxCode);
-//		}else{
-//
-//			codeMap.put(surveys.getChannelName(), 1);
-//		}
 
 		ChannelClass channel = new ChannelClass();
 		try {
@@ -298,11 +271,6 @@ public class ChannelController {
 		}
 
 		log.info(" --#### id-- " + channel.getId());
-//		channel.setCode((int)(Math.random()*10000)+""+channel.getId());
-//		channel.setCode(channel.getId());
-//		channelClassDao.save(channel);
-
-//		redisUtil.rpush(key, jm.toJsonString(surveys));
 
 		data.put("result", "ok");
 		data.put("code", channel.getCode());
@@ -321,6 +289,9 @@ public class ChannelController {
 		final_request = request;
 		final_response = response;
 		try {
+			//每次保存前，同步maxcode值
+			this.getMaxCode();
+
 			String fileName = "活动名单" + DateUtils.getDate("yyyyMMddHHmmss") + ".xlsx";
 
 			log.info("######################  导出-" + key + " " + fileName);
@@ -359,13 +330,14 @@ public class ChannelController {
 			List<ChannelClass> list = Lists.newArrayList(channelClassDao.findAll());
 			List<ChannelResult> listsssss = Lists.newArrayList();
 //			ArrayList<HashMap<Integer, Integer>> anssList = new ArrayList(20);
-this.init();//
+			this.init();
+
 			for (ChannelClass ch : list) {
 				if (!StringUtils.isBlank(key) && !key.equals("a") && !key.equals(ch.getChannelName())) {
-					log.info("#### key-"+key+" getChannelName-"+ch.getChannelName());
+					log.info("#### key-" + key + " getChannelName-" + ch.getChannelName());
 					continue;
 				}
-				log.info("#### ch-"+ch.getId());
+				log.info("#### ch-" + ch.getId());
 
 				//1111111111
 				String[] first = ch.getSurvey1().split(",");
@@ -377,104 +349,104 @@ this.init();//
 //
 				//22222222
 				int ans = ch.getSurvey2();
-				sco = answer.get(7+ans);
-				answer.put(7+ans, sco == 0 ? 1 : sco + 1);
+				sco = answer.get(7 + ans);
+				answer.put(7 + ans, sco == 0 ? 1 : sco + 1);
 //
 				//3333333
 				ans = ch.getSurvey3();
-				sco = answer.get(19+ans);
-				answer.put(19+ans, sco == 0 ? 1 : sco + 1);
+				sco = answer.get(19 + ans);
+				answer.put(19 + ans, sco == 0 ? 1 : sco + 1);
 
 				//44444
-				try{
+				try {
 					ans = ch.getSurvey4();
-					sco = answer.get(22+ans);
-					answer.put(22+ans, sco == 0 ? 1 : sco + 1);
-				}catch (Exception e){
+					sco = answer.get(22 + ans);
+					answer.put(22 + ans, sco == 0 ? 1 : sco + 1);
+				} catch (Exception e) {
 				}
 
 				//5555555
-				try{
+				try {
 					ans = ch.getSurvey5();
-					sco = answer.get(28+ans);
-					answer.put(28+ans, sco == 0 ? 1 : sco + 1);
-				}catch (Exception e){
+					sco = answer.get(28 + ans);
+					answer.put(28 + ans, sco == 0 ? 1 : sco + 1);
+				} catch (Exception e) {
 				}
 
 				//66666
 				ans = ch.getSurvey6();
-				sco = answer.get(34+ans);
-				answer.put(34+ans, sco == 0 ? 1 : sco + 1);
+				sco = answer.get(34 + ans);
+				answer.put(34 + ans, sco == 0 ? 1 : sco + 1);
 
 				//77777
 				ans = ch.getSurvey7();
-				sco = answer.get(39+ans);
-				answer.put(39+ans, sco == 0 ? 1 : sco + 1);
+				sco = answer.get(39 + ans);
+				answer.put(39 + ans, sco == 0 ? 1 : sco + 1);
 
 				//8888888
 				ans = ch.getSurvey8();
-				sco = answer.get(46+ans);
-				answer.put(46+ans, sco == 0 ? 1 : sco + 1);
+				sco = answer.get(46 + ans);
+				answer.put(46 + ans, sco == 0 ? 1 : sco + 1);
 
 				//99999
 				ans = ch.getSurvey9();
-				sco = answer.get(53+ans);
-				answer.put(53+ans, sco == 0 ? 1 : sco + 1);
+				sco = answer.get(53 + ans);
+				answer.put(53 + ans, sco == 0 ? 1 : sco + 1);
 
 				//10
 				ans = ch.getSurvey10();
-				sco = answer.get(62+ans);
-				answer.put(62+ans, sco == 0 ? 1 : sco + 1);
+				sco = answer.get(62 + ans);
+				answer.put(62 + ans, sco == 0 ? 1 : sco + 1);
 
 				//11
 				ans = ch.getSurvey11();
-				sco = answer.get(70+ans);
-				answer.put(70+ans, sco == 0 ? 1 : sco + 1);
+				sco = answer.get(70 + ans);
+				answer.put(70 + ans, sco == 0 ? 1 : sco + 1);
 
 				//12
 				ans = ch.getSurvey12();
-				sco = answer.get(76+ans);
-				answer.put(76+ans, sco == 0 ? 1 : sco + 1);
+				sco = answer.get(76 + ans);
+				answer.put(76 + ans, sco == 0 ? 1 : sco + 1);
 
 				//13
 				ans = ch.getSurvey13();
-				sco = answer.get(81+ans);
-				answer.put(81+ans, sco == 0 ? 1 : sco + 1);
+				sco = answer.get(81 + ans);
+				answer.put(81 + ans, sco == 0 ? 1 : sco + 1);
 
 				//14
 				ans = ch.getSurvey14();
-				sco = answer.get(88+ans);
-				answer.put(88+ans, sco == 0 ? 1 : sco + 1);
+				sco = answer.get(88 + ans);
+				answer.put(88 + ans, sco == 0 ? 1 : sco + 1);
 
 				//15
 				ans = ch.getSurvey15();
-				sco = answer.get(96+ans);
-				answer.put(96+ans, sco == 0 ? 1 : sco + 1);
+				sco = answer.get(96 + ans);
+				answer.put(96 + ans, sco == 0 ? 1 : sco + 1);
 
 				//16
 				ans = ch.getSurvey16();
-				sco = answer.get(103+ans);
-				answer.put(103+ans, sco == 0 ? 1 : sco + 1);
+				sco = answer.get(103 + ans);
+				answer.put(103 + ans, sco == 0 ? 1 : sco + 1);
 
 				//17
 				ans = ch.getSurvey17();
-				sco = answer.get(109+ans);
-				answer.put(109+ans, sco == 0 ? 1 : sco + 1);
+				sco = answer.get(109 + ans);
+				answer.put(109 + ans, sco == 0 ? 1 : sco + 1);
 
 				//18
 				ans = ch.getSurvey18();
-				sco = answer.get(118+ans);
-				answer.put(118+ans, sco == 0 ? 1 : sco + 1);
+				sco = answer.get(118 + ans);
+				answer.put(118 + ans, sco == 0 ? 1 : sco + 1);
 
 				//19
 				ans = ch.getSurvey19();
-				sco = answer.get(125+ans);
-				answer.put(125+ans, sco == 0 ? 1 : sco + 1);
+				sco = answer.get(125 + ans);
+				answer.put(125 + ans, sco == 0 ? 1 : sco + 1);
 
 				//222222220
 				ans = ch.getSurvey20();
-				sco = answer.get(128+ans);
-				answer.put(128+ans, sco == 0 ? 1 : sco + 1);
+				sco = answer.get(128 + ans);
+				answer.put(128 + ans, sco == 0 ? 1 : sco + 1);
 			}
 			//
 
@@ -503,14 +475,15 @@ this.init();//
 			ChannelResult result;
 			int ind = 0;
 			for (String name : questions) {
-				result = new ChannelResult(name, answer.get(ind)==null?"":answer.get(ind)+"");
-				log.info("####  new ChannelResult("+name+", "+answer.get(ind)+")");
+				result = new ChannelResult(name, answer.get(ind) == null ? "" : answer.get(ind) + "");
+				log.info("####  new ChannelResult(" + name + ", " + answer.get(ind) + ")");
 				listsssss.add(result);
 				ind++;
 			}
 
 			if (listsssss.size() > 0
-					) new ExportExcel("结果:"+key+ "-" + DateUtils.getDate("yyyyMMddHHmmss"), ChannelResult.class).setDataList(listsssss).write(response, fileName).dispose();
+					)
+				new ExportExcel("结果:" + key + "-" + DateUtils.getDate("yyyyMMddHHmmss"), ChannelResult.class).setDataList(listsssss).write(response, fileName).dispose();
 		} catch (Exception e) {
 			log.error("######################  导出失败-");
 			e.printStackTrace();
